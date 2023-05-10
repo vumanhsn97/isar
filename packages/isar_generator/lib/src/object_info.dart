@@ -27,7 +27,13 @@ class ObjectInfo {
   final List<ObjectIndex> indexes;
   final List<ObjectLink> links;
 
-  int get id => xxh3(utf8.encode(isarName) as Uint8List);
+  int get id {
+    var value = xxh3(utf8.encode(isarName) as Uint8List);
+    var valueString = '$value';
+    int maxLength = valueString.length > 10 ? 10 : valueString.length;
+    var number = valueString.substring(0, maxLength);
+    return int.tryParse(number) ?? value;
+  }
 
   bool get isEmbedded => accessor == null;
 
