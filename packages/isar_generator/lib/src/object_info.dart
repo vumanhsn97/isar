@@ -212,6 +212,10 @@ class ObjectLink {
     final colId = xxh3(utf8.encode(col) as Uint8List, seed: isBacklink ? 1 : 0);
 
     final name = targetLinkIsarName ?? isarName;
-    return xxh3(utf8.encode(name) as Uint8List, seed: colId);
+    var value = xxh3(utf8.encode(name) as Uint8List, seed: colId);
+    var valueString = '$value';
+    int maxLength = valueString.length > 10 ? 10 : valueString.length;
+    var number = valueString.substring(0, maxLength);
+    return int.tryParse(number) ?? value;
   }
 }
